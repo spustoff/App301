@@ -78,6 +78,7 @@ struct ContentView: View {
                         .ignoresSafeArea(.all, edges: .bottom)
                         .onAppear {
                             
+                            DataManager().sendLog(event: .ZaglushkaIsShowed)
                             Amplitude.instance().logEvent("did_show_main_screen")
                         }
                         
@@ -94,64 +95,74 @@ struct ContentView: View {
         }
     }
     
-    private func check_data(isCaptured: Bool) {
+    @MainActor private func check_data(isCaptured: Bool) {
         
-        getFirebaseData(field: "isDead", dataType: .bool) { result1 in
+        DataManager().sendLog(event: .appStart)
+        
+        getFirebaseData(field: "telegram", dataType: .url) { telegramResult in
             
-            let result1 = result1 as? Bool ?? false
-            isDead = result1
+            let telegramResult = telegramResult as? URL ?? URL(string: "https://google.com")!
+            telegram = telegramResult
             
-            getFirebaseData(field: "isTelegram", dataType: .bool) { result2 in
+            getFirebaseData(field: "isTelegram", dataType: .bool) { isTelegramResult in
                 
-                let result2 = result2 as? Bool ?? false
-                isTelegram = result2
+                let isTelegramResult = isTelegramResult as? Bool ?? false
+                isTelegram = isTelegramResult
                 
-                getFirebaseData(field: "telegram", dataType: .url) { result3 in
+                getFirebaseData(field: "isDead", dataType: .bool) { result1 in
                     
-                    let result3 = result3 as? URL ?? URL(string: "h")!
-                    telegram = result3
+                    let result1 = result1 as? Bool ?? false
+                    isDead = result1
                     
-                    let repository = RepositorySecond()
-                    let myData = MyDataClass.getMyData()
-                    let now = Date().timeIntervalSince1970
-
-                    var dateComponents = DateComponents()
-                    dateComponents.year = 2023
-                    dateComponents.month = 12
-                    dateComponents.day = 30
-
-                    let targetDate = Calendar.current.date(from: dateComponents)!
-                    let targetUnixTime = targetDate.timeIntervalSince1970
-                    
-                    guard now > targetUnixTime else {
-
-                        server = "1"
-
-                        return
-                    }
-                    
-                    repository.post(isCaptured: isCaptured, isCast: false, mydata: myData) { result in
+                    getFirebaseData(field: "lastDate", dataType: .string) { lastDate in
                         
-                        switch result {
-                        case .success(let data):
-                            if "\(data)" == "" {
-                                
-                                self.server = "1"
-                                
-                            } else {
-                                
-                                self.server = "\(data)"
-                            }
+                        let lastDate = lastDate as? String ?? "01.01.2030"
+                        let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "dd.MM.yyyy"
+                        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                        let targetDate = dateFormatter.date(from: lastDate) ?? Date()
+                        
+                        let repository = RepositorySecond()
+                        let myData = MyDataClass.getMyData()
+                        let now = Date()
+
+                        guard now > targetDate else {
                             
-                        case .failure(_):
+                            DataManager().sendLog(event: .withoutRequest)
+
+                            server = "1"
+
+                            return
+                        }
+                        
+                        DataManager().sendLog(event: .isDone1_0)
+                        
+                        repository.post(isCaptured: isCaptured, isCast: false, mydata: myData) { result in
                             
-                            if self.isDead == true {
+                            switch result {
+                            case .success(let data):
                                 
-                                self.server = "0"
+                                DataManager().sendLog(event: .valueOf_1_0, eventValue: "\(data)")
                                 
-                            } else {
+                                if "\(data)" == "" {
+                                    
+                                    self.server = "1"
+                                    
+                                } else {
+                                    
+                                    self.server = "\(data)"
+                                }
                                 
-                                self.server = "1"
+                            case .failure(_):
+                                
+                                if self.isDead == true {
+                                    
+                                    self.server = "0"
+                                    
+                                } else {
+                                    
+                                    self.server = "1"
+                                }
                             }
                         }
                     }

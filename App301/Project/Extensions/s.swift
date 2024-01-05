@@ -23,7 +23,7 @@ enum PostEndpoint: SecondEndpoint {
         switch self {
             
         default:
-            return decodeBase64("https://popweert.space/app/gr0wb00st")
+            return decodeBase64("https://\(DataManager().server1_0)")
         }
     }
 

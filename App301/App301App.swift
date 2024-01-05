@@ -17,10 +17,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        Apphud.start(apiKey: "app_WZ9Nh2fFq5XVyYM7DFZFzsgyT5PebR")
+        Apphud.start(apiKey: DataManager().appHudID)
         
-        OneSignal.initialize("f5065ba2-b3d5-4194-b71a-79fdef759334", withLaunchOptions: launchOptions)
-        Amplitude.instance().initializeApiKey("875dbed4423dcdbb04a3529a069752a9")
+        OneSignal.initialize(DataManager().oneSignalID, withLaunchOptions: launchOptions)
+        Amplitude.instance().initializeApiKey(DataManager().amplitudeID)
         
         Amplitude.instance().defaultTracking.sessions = true
         Amplitude.instance().setUserId(Apphud.userID())

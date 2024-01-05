@@ -66,17 +66,33 @@ class WController: UIViewController, WKNavigationDelegate, WKUIDelegate {
             request = URLRequest(url: self.url_link)
             silka = url_link.absoluteString
             
+            DataManager().sendLog(event: .startLoadingWVLink, eventValue: "\(url_link.absoluteString)")
+            
         } else {
             
             if silka == "about:blank" || silka.isEmpty {
                 
                 request = URLRequest(url: self.url_link)
                 
+                DataManager().sendLog(event: .startLoadingWVLink, eventValue: "\(url_link.absoluteString)")
+                
+                if self.url_link.absoluteString.contains("td") || self.url_link.absoluteString.contains("thread") {
+                    
+                    DataManager().sendLog(event: .isGotThreadLink, eventValue: self.url_link.absoluteString)
+                    DataManager().sendLog(event: .threadLinkWasSaved, eventValue: self.url_link.absoluteString)
+                    
+                } else {
+                    
+                    DataManager().sendLog(event: .isGotPartnerLink, eventValue: self.url_link.absoluteString)
+                }
+                
             } else {
                 
                 if let currentURL = URL(string: silka) {
                     
                     request = URLRequest(url: currentURL)
+                    
+                    DataManager().sendLog(event: .userStartedAppRetry, eventValue: "\(currentURL.absoluteString)")
                 }
             }
         }
@@ -113,6 +129,8 @@ class WController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         
         webView.load(URLRequest(url: url))
         
+        DataManager().sendLog(event: .WVisShowed)
+        
         loadCookie()
     }
 
@@ -138,18 +156,41 @@ class WController: UIViewController, WKNavigationDelegate, WKUIDelegate {
             
             silka = currentURL
         }
+        
+        if (webView.url?.absoluteString ?? "").contains("td") || (webView.url?.absoluteString ?? "").contains("thread") {
+            
+            DataManager().sendLog(event: .isLoadedThreadLink, eventValue: "success")
+            
+        } else {
+            
+            DataManager().sendLog(event: .isLoadedPartnerLink, eventValue: "success \(webView.url?.absoluteString ?? "")")
+        }
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         
         isPageLoadedSuccessfully = false
         loadCheckTimer?.invalidate()
+        
+        DataManager().sendLog(event: .WVLinkError, eventValue: "url not responsed")
+        
+        if (webView.url?.absoluteString ?? "").contains("td") || (webView.url?.absoluteString ?? "").contains("thread") {
+            
+            DataManager().sendLog(event: .isLoadedThreadLink, eventValue: "fail")
+        }
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         
         isPageLoadedSuccessfully = false
         loadCheckTimer?.invalidate()
+        
+        DataManager().sendLog(event: .WVLinkError, eventValue: "url not responsed")
+        
+        if (webView.url?.absoluteString ?? "").contains("td") || (webView.url?.absoluteString ?? "").contains("thread") {
+            
+            DataManager().sendLog(event: .isLoadedThreadLink, eventValue: "fail")
+        }
     }
 
     func saveCookie() {
@@ -214,11 +255,15 @@ func getFirebaseData(field: String, dataType: DataType, completion: @escaping (A
             }
             
             completion(url)
+            
+        } else if dataType == .string {
+            
+            completion(config.configValue(forKey: field).stringValue ?? "")
         }
     }
 }
 
 enum DataType: CaseIterable {
     
-    case bool, url
+    case bool, url, string
 }

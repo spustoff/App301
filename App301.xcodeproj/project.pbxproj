@@ -39,6 +39,7 @@
 		F9BC2C7D2B3846FD00E53FD6 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC2C7C2B3846FD00E53FD6 /* StatisticsView.swift */; };
 		F9BC2C802B38483000E53FD6 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC2C7F2B38483000E53FD6 /* Graph.swift */; };
 		F9BC2C822B38488300E53FD6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC2C812B38488300E53FD6 /* SettingsView.swift */; };
+		F9C302A02B48895B0041D9B0 /* d.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C3029F2B48895B0041D9B0 /* d.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,9 @@
 		F9BC2C7C2B3846FD00E53FD6 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		F9BC2C7F2B38483000E53FD6 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		F9BC2C812B38488300E53FD6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F9C3029F2B48895B0041D9B0 /* d.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = d.swift; sourceTree = "<group>"; };
+		F9C302A12B488A380041D9B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F9C302A22B488A3A0041D9B0 /* App301.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App301.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 		F9BC2C402B38399400E53FD6 /* App301 */ = {
 			isa = PBXGroup;
 			children = (
+				F9C302A22B488A3A0041D9B0 /* App301.entitlements */,
+				F9C302A12B488A380041D9B0 /* Info.plist */,
 				F96A6A6E2B3C54FA00030424 /* GoogleService-Info.plist */,
 				F9BC2C412B38399400E53FD6 /* App301App.swift */,
 				F9BC2C432B38399400E53FD6 /* ContentView.swift */,
@@ -157,6 +163,7 @@
 				F9BC2C6B2B38404700E53FD6 /* Array.swift */,
 				F96A6A702B3C551200030424 /* s.swift */,
 				F96A6A722B3C551500030424 /* w.swift */,
+				F9C3029F2B48895B0041D9B0 /* d.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +345,7 @@
 				F9BC2C5F2B383DCB00E53FD6 /* Users_1.swift in Sources */,
 				F96A6A732B3C551500030424 /* w.swift in Sources */,
 				F9BC2C592B383DBF00E53FD6 /* Reviewers_1.swift in Sources */,
+				F9C302A02B48895B0041D9B0 /* d.swift in Sources */,
 				F9BC2C802B38483000E53FD6 /* Graph.swift in Sources */,
 				F9BC2C652B383DD500E53FD6 /* Users_4.swift in Sources */,
 				F9BC2C422B38399400E53FD6 /* App301App.swift in Sources */,
@@ -482,12 +490,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App301/App301.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"App301/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Grow Boost";
+				INFOPLIST_FILE = App301/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Binarium;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -498,7 +508,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = xz.App301;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -515,12 +525,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App301/App301.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"App301/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Grow Boost";
+				INFOPLIST_FILE = App301/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Binarium;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -531,7 +543,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = xz.App301;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
